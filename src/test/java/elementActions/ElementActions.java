@@ -1,0 +1,146 @@
+package elementActions;
+
+import java.time.Duration;
+import java.util.List;
+
+import org.openqa.selenium.Alert;
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.NoAlertPresentException;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+public class ElementActions {
+
+	private WebDriver driver;
+	private WebDriverWait wait;
+	private JavascriptExecutor js;
+
+	public ElementActions(WebDriver driver) {
+		this.driver = driver;
+		wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+		js = (JavascriptExecutor) driver;
+	}
+
+	public void clickAction(WebElement element) {
+		wait.until(ExpectedConditions.elementToBeClickable(element)).click();
+	}
+
+	public void scrollWaitAndClick(WebElement element) {
+
+		((JavascriptExecutor) driver).executeScript(
+				"arguments[0].scrollIntoView({block:'center'});", element);
+
+		wait.until(ExpectedConditions.visibilityOf(element));
+		wait.until(ExpectedConditions.elementToBeClickable(element)).click();
+	}
+
+	public int getElementCount(List<WebElement> element) {
+		return element.size();
+	}
+
+	public void clickElementByText(List<WebElement> elements, String text) {
+		for (WebElement element : elements) {
+			if (element.getText().trim().equalsIgnoreCase(text.trim())) {
+				clickAction(element);
+				return;
+			}
+		}
+		throw new RuntimeException("Element with text not found: " + text);
+	}
+
+	public boolean isElementPresentByText(List<WebElement> elements,
+			String text) {
+
+		if (elements == null || elements.isEmpty()) {
+			return false;
+		}
+		for (WebElement element : elements) {
+			if (element.getText() != null
+					&& element.getText().trim().equalsIgnoreCase(text.trim())) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	public boolean isElementTextEquals(WebElement element,
+			String expectedText) {
+
+		if (element == null || expectedText == null) {
+			return false;
+		}
+		String actualText = element.getText().trim();
+		return actualText.equalsIgnoreCase(expectedText.trim());
+	}
+
+	public String getText(WebElement element) {
+
+		if (element != null) {
+			return element.getText().trim();
+		}
+		return null;
+
+	}
+
+	public String getAttribute(WebElement element, String attributeName) {
+
+		if (element != null) {
+			return element.getAttribute(attributeName).trim();
+		}
+		return null;
+
+	}
+
+	public boolean isElementEnabled(WebElement element) {
+		if (element == null) {
+			throw new IllegalArgumentException("WebElement is null");
+		}
+		return element.isEnabled();
+	}
+
+	public void waitForUrlToContain(String partialUrl) {
+		wait.until(ExpectedConditions.urlContains(partialUrl));
+	}
+
+	public void sendKeys(WebElement element, String text) {
+		wait.until(ExpectedConditions.visibilityOf(element));
+		element.clear();
+		element.sendKeys(text);
+	}
+
+	public String JavaScriptvalidation(WebElement element) {
+
+		return ((String) js.executeScript(
+				"return arguments[0].validationMessage;", element));
+
+	}
+
+	public boolean isElemnetDisplayed(WebElement element) {
+		wait.until(ExpectedConditions.visibilityOf(element));
+		return element.isDisplayed();
+	}
+
+	public String getAlert() {
+
+		try {
+			Alert alert = driver.switchTo().alert();
+			String alertMsg = alert.getText();
+			alert.accept();
+			System.out.println("alert is" + alertMsg);
+
+			return (alertMsg);
+		} catch (NoAlertPresentException e) {
+			return null;
+		}
+
+	}
+
+	public void mouseOverAnElement(WebElement element) {
+		Actions actions = new Actions(driver);
+		actions.moveToElement(element).perform();
+
+	}
+}
