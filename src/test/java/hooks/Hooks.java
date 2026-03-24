@@ -17,7 +17,7 @@ import pageObjectManager.PageObjectManager;
 import utilities.LoggerFactory;
 public class Hooks {
 
-	PageObjectManager pom;
+	public static PageObjectManager pom;
 	@Before
 	public void Setup() throws IOException {
 
