@@ -10,35 +10,35 @@ Feature: Add Patient Details Validation
   Scenario Outline: Verify Patient Details UI validation for various fields
     When User enters data for "<TestCaseID>" from Excel sheet "PatientData"
     Then User should see the expected error for "<TestCaseID>"
-
-    Examples: 
+    
+  Examples: 
       | TestCaseID                         |
-      | Add_first_name_special_char        |
-      | Mandatory_field_firstname          |
-      | Add_last_name_numeric              |
-      | Add_last_name_special_char         |
-      | Mandatory_field_lastname           |
-      | Add_email_starts_with_number       |
-      | Add_email_without_@                |
-      | Add_email_without_dot_com          |
-      | Existing_email_id                  |
-      | Mandatory_field_email              |
-      | Add_contact_alphabets              |
-      | Add_contact_special_char           |
-      | Add_contact_less_than_required     |
-      | Existing_contact_number            |
-      | Mandatory_field_contact            |
-      | Leaving_Allergies_empty            |
-      | Leaving_Food_Preference_empty      |
-      | Leaving_Cuisine_Category_empty     |
-      | Leaving_DOB_empty                 |
-      | Add_weight_with_special_characters |
-      | Add_weight_with_alphabets          |
-      | Add_height_with_special_characters |
-      | Add_height_with_alphabets          |
-      | Add_temperature_with_special_chars |
-      | Add_temperature_with_alphabets     |
-      | Add_SP_DP_with_special_characters  |
-      | Add_SP_DP_with_alphabets           |
-      | Upload_invalid_file_type           |
-      | Upload_file_exceeding_size         |
+      | First Name Special Characters      |
+      | First Name Required                |
+      | Last Name Numeric                  |
+      | Last Name Special Characters       |
+      | Last Name Required                 |
+      | Email Starts With Number           |
+      | Email Missing At Symbol            |
+      | Email Missing Dot Com              |
+      | Email Already Exists               |
+      | Email Required                     |
+      | Contact Number Alphabets           |
+      | Contact Number Special Characters  |
+      | Contact Number Too Short           |
+      | Contact Number Already Exists      |
+      | Contact Number Required            |
+      | Allergies Field Empty              |
+      | Food Preference Field Empty        |
+      | Cuisine Category Field Empty       |
+      | Date of Birth Empty                |
+      | Weight With Special Characters     |
+      | Weight With Alphabets              |
+      | Height With Special Characters     |
+      | Height With Alphabets              |
+      | Temperature With Special Characters|
+      | Temperature With Alphabets         |
+      | SP DP With Special Characters      |
+      | SP DP With Alphabets               |
+      | Invalid File Type Upload           |
+      | File Exceeding Size Limit          |
