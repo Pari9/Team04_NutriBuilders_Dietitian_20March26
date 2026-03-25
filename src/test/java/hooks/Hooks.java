@@ -30,7 +30,7 @@ public class Hooks {
 		if (DriverManager.getDriver() != null) {
 			DriverManager.getDriver().quit();
 		}
-		LoggerFactory.getLogger().info("DONE tearDown()..");
+		LoggerFactory.info("DONE tearDown()..");
 	}
 
 	@AfterStep
