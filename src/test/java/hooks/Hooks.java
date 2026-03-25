@@ -18,13 +18,20 @@ import utilities.LoggerFactory;
 public class Hooks {
 
 	public static PageObjectManager pom;
-	@Before
+	@Before(order =1)
 	public void Setup() throws IOException {
 
 		DriverManager.initBrowser();
 		pom = new PageObjectManager(DriverManager.getDriver());
 	}
-	
+	@Before(value = "@LoginRequired", order = 2)
+	public void login() {
+		LoggerFactory.info("Performing login ");
+		/*pom.getHomePage().homeGetStartedBtn();
+		pom.getLoginPage().clickSignIn();
+		pom.getLoginPage().loginToPortal();*/
+		LoggerFactory.info("Login successful");
+	}
 	@After
 	public void tearDown(Scenario scenario) {
 		if (DriverManager.getDriver() != null) {
