@@ -1,31 +1,44 @@
-package elementActions;
+package utilities;
 
-import java.time.Duration;
-import java.util.List;
-
-import org.openqa.selenium.Alert;
-import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.NoAlertPresentException;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-public class ElementActions {
+import java.time.Duration;
+import java.util.List;
+
+public class CommonMethods {
 
 	private WebDriver driver;
 	private WebDriverWait wait;
 	private JavascriptExecutor js;
 
-	public ElementActions(WebDriver driver) {
+	public CommonMethods(WebDriver driver) {
 		this.driver = driver;
-		wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+		this.wait = new WebDriverWait(driver, Duration.ofSeconds(5));
 		js = (JavascriptExecutor) driver;
 	}
 
-	public void clickAction(WebElement element) {
+	public void clickWebElement(WebElement element) {
 		wait.until(ExpectedConditions.elementToBeClickable(element)).click();
+	}
+
+	public void clickElementByLocator(By locator) {
+		wait.until(ExpectedConditions.elementToBeClickable(locator)).click();
+	}
+
+	public WebElement waitForVisibility(By locator) {
+		return wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
+	}
+
+	public WebElement waitForVisibilityOfElement(WebElement element) {
+		wait.until(ExpectedConditions.visibilityOf(element));
+        return element;
+    }
+
+	public String getText(By locator) {
+		return waitForVisibility(locator).getText().trim();
 	}
 
 	public void scrollWaitAndClick(WebElement element) {
@@ -44,7 +57,7 @@ public class ElementActions {
 	public void clickElementByText(List<WebElement> elements, String text) {
 		for (WebElement element : elements) {
 			if (element.getText().trim().equalsIgnoreCase(text.trim())) {
-				clickAction(element);
+				clickWebElement(element);
 				return;
 			}
 		}
@@ -58,8 +71,7 @@ public class ElementActions {
 			return false;
 		}
 		for (WebElement element : elements) {
-			if (element.getText() != null
-					&& element.getText().trim().equalsIgnoreCase(text.trim())) {
+			if (element.getText() != null && element.getText().trim().equalsIgnoreCase(text.trim())) {
 				return true;
 			}
 		}
