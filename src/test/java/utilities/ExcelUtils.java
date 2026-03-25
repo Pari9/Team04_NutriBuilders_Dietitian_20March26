@@ -14,13 +14,13 @@ import org.apache.poi.ss.usermodel.WorkbookFactory;
 
 public class ExcelUtils {
 
-	private String filePath;
+	private static String filePath;
 
 	public ExcelUtils(String filePath) {
 		this.filePath = ConfigReader.getProperty("test_data_path");
 	}
 
-	public List<Map<String, String>> getDataAll(String sheetName) {
+	public static List<Map<String, String>> getDataAll(String sheetName) {
 		List<Map<String, String>> sheetData = new ArrayList<>();
 
 		try (FileInputStream fis = new FileInputStream(filePath); Workbook workbook = WorkbookFactory.create(fis)) {
@@ -50,19 +50,18 @@ public class ExcelUtils {
 		return sheetData;
 	}
 
-	public Map<String, String> getRowDataByScenario(String sheetName, String scenarioName) {
+	public static Map<String, String> getRowDataByScenario(String sheetName, String scenarioName) {
+	    List<Map<String, String>> allData = getDataAll(sheetName);
 
-		List<Map<String, String>> allData = getDataAll(sheetName);
-
-		for (Map<String, String> row : allData) {
-
-			if (row.containsKey("Scenario") && row.get("Scenario").equalsIgnoreCase(scenarioName)) {
-
-				return row;
-			}
-		}
-
-		throw new RuntimeException("No data found in Excel for scenario: " + scenarioName);
+	    for (Map<String, String> row : allData) {
+	        // Check both "Scenario" and "TestCaseID" keys for maximum compatibility
+	    	if (row.containsKey("Scenario") && row.get("Scenario").equalsIgnoreCase(scenarioName)||
+	    			(row.containsKey("TestCaseID") && row.get("TestCaseID").equalsIgnoreCase(scenarioName)))
+	    			{
+	       
+	            return row;
+	        }
+	    }
+	    throw new RuntimeException("No data found in Excel for: " + scenarioName);
 	}
-
 }
