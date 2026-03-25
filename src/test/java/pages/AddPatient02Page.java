@@ -11,10 +11,10 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.testng.asserts.SoftAssert;
 
-public class AddPatient02 {
+public class AddPatient02Page {
 	WebDriver driver;
 	SoftAssert softAssert = new SoftAssert();
-	public AddPatient02(WebDriver driver) {
+	public AddPatient02Page(WebDriver driver) {
 		this.driver = driver;
 		PageFactory.initElements(driver, this);
 	}
