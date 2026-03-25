@@ -1,4 +1,6 @@
-<project xmlns="https://maven.apache.org/POM/4.0.0" xmlns:xsi="https://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <groupId>Team04_NutriBuilders_Dietitian_20March26</groupId>
   <artifactId>Team04_NutriBuilders_Dietitian_20March26</artifactId>
@@ -8,6 +10,8 @@
         <maven.compiler.source>21</maven.compiler.source>
         <maven.compiler.target>21</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <cucumber.version>7.21.1</cucumber.version>
+    <jackson.version>2.17.2</jackson.version>
     </properties>
     <build>
         <pluginManagement>
@@ -28,7 +32,7 @@
                         <properties>
                             <property>
                                 <name>dataproviderthreadcount</name>
-                                <value>5</value>
+                                <value>2</value>
                             </property>
                         </properties>
                     </configuration>
@@ -73,14 +77,14 @@
         <dependency>
             <groupId>org.apache.logging.log4j</groupId>
             <artifactId>log4j-core</artifactId>
-            <version>2.25.2</version>
+            <version>2.24.3</version>
         </dependency>
         <!--
         https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-api -->
         <dependency>
             <groupId>org.apache.logging.log4j</groupId>
             <artifactId>log4j-api</artifactId>
-            <version>2.25.2</version>
+            <version>2.24.3</version>
         </dependency>
         <!-- https://mvnrepository.com/artifact/org.apache.poi/poi -->
         <dependency>
@@ -94,6 +98,7 @@
             <artifactId>poi-ooxml</artifactId>
             <version>5.4.1</version>
         </dependency>
+
         <dependency>
             <groupId>io.qameta.allure</groupId>
             <artifactId>allure-cucumber7-jvm</artifactId>
@@ -104,12 +109,33 @@
             <artifactId>extentreports-cucumber7-adapter</artifactId>
             <version>1.14.0</version>
         </dependency>
-        
+
         <dependency>
 		    <groupId>io.cucumber</groupId>
 		    <artifactId>cucumber-picocontainer</artifactId>
-		    <version>7.21.1</version>
+		    <version>${cucumber.version}</version>
 		</dependency>
+       <dependency>
+           <groupId>net.java.dev.jna</groupId>
+           <artifactId>jna</artifactId>
+           <version>5.14.0</version>
+       </dependency>
+
+       <dependency>
+           <groupId>com.fasterxml.jackson.core</groupId>
+           <artifactId>jackson-databind</artifactId>
+           <version>${jackson.version}</version>
+       </dependency>
+       <dependency>
+           <groupId>com.fasterxml.jackson.core</groupId>
+           <artifactId>jackson-core</artifactId>
+           <version>${jackson.version}</version>
+       </dependency>
+       <dependency>
+           <groupId>com.fasterxml.jackson.core</groupId>
+           <artifactId>jackson-annotations</artifactId>
+           <version>${jackson.version}</version>
+       </dependency>
     </dependencies>
 </project>
 
