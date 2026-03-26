@@ -1,3 +1,4 @@
+@Login
 Feature: Dietician Application - UI and Functional Validation
 
   Background:  user is on the browser 

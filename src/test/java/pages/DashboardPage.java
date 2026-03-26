@@ -33,7 +33,7 @@ public class DashboardPage {
 
 
     public boolean isDashboard() {
-        return driver.getTitle().contains("NumpyNinja");
+        return driver.getTitle().contains("Dashboard");
     }  
     
     public int getNavbarLinksCount() {
