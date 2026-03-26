@@ -28,10 +28,10 @@ package pages;
 			@FindBy(linkText ="Log out") 
 			WebElement logoutButton;
 	//Navigation Bar
-			@FindBy(xpath ="//*[@class='bs-example']")
-			WebElement navBar;
+			@FindBy(xpath ="//div[@class='bs-example']")
+			WebElement navigationBar;
 	//Navigation Bar title
-			@FindBy(xpath ="//*[text() = 'NumpyNinja']")
+			@FindBy(xpath ="//a[text() = \"NumpyNinja\"]")
 			WebElement navBartitleText;
 			
 	//Home icon
@@ -58,7 +58,7 @@ package pages;
 			    WebElement errorMsg;
 	
 			 @FindBy(xpath="//*[text()=\"Sign in\"]")
-				WebElement signIn;
+				WebElement logIn;
 			 
 	//UI Methods
 			 
@@ -111,7 +111,7 @@ package pages;
 			    }
 
 			    public String getNavBarColor() {
-			        return navBar.getCssValue("background-color");
+			        return navigationBar.getCssValue("background-color");
 			    }
 
 			    private String getHexColor(String cssValue) {
@@ -137,9 +137,9 @@ package pages;
 			        return loginBtn.getCssValue("background-color");
 			    }
 
-			    public void clickSignIn()
+			    public void clicklogIn()
 			    {
-			    	signIn.click();
+			    	logIn.click();
 			    }
 			    
 			    

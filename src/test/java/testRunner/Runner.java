@@ -13,7 +13,7 @@ import io.cucumber.testng.CucumberOptions;
 @CucumberOptions(
 		features = "src/test/resources/Features",
 		glue = { "hooks", "stepDefinitions" },
-		// tags = "@Run",
+		// tags =  "@Run",
 		plugin = {
 				"pretty",
 				"html:target/cucumber-reports.html",
