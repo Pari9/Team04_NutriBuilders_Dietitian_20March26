@@ -1,7 +1,8 @@
+@LoginRequired
 Feature: Add Patient detailed verification
 
   Background: User is in Add Patient Details and creating New Patient Details
-  	Given User logged into Application
+    Given User is on Dashboard page
     When User clicks on New Patient in the header section
 
   Scenario: Presence of dropdown values in Allergy
@@ -93,14 +94,39 @@ Feature: Add Patient detailed verification
 
   Scenario: State of Submit button after adding values in all field
     When User enters valid values in all field
+      | firstName     | Ganesh                    |
+      | lastName      | Sharma                    |
+      | email         | ganesh.sharma@example.com |
+      | contactNumber | 9876543210                |
+      | allergy       | Egg                       |
+      | foodPref      | Vegan                     |
+      | cuisine       | Indian                    |
+      | dob           | 01/15/1990                |
     Then Submit button should be enabled
+
 
   Scenario: Success message validation for adding new patient with valid data
     When User clicks Submit after entering valid data in all mandatory fields
+      | firstName     | Suresh                    |
+      | lastName      | Sharma                    |
+      | email         | suresh.sharma@example.com |
+      | contactNumber | 9874543210                |
+      | allergy       | Egg                       |
+      | foodPref      | Vegan                     |
+      | cuisine       | Indian                    |
+      | dob           | 01/15/1994                |
     Then User should see Patient successfully created - toast message
 
   Scenario: Navigation to My patient after adding new patient with valid data
     When User clicks Submit after entering valid data in all mandatory fields
+      | firstName     | Ramesh                    |
+      | lastName      | Sharma                    |
+      | email         | Ramesh.sharma@example.com |
+      | contactNumber | 9874543340                |
+      | allergy       | Egg                       |
+      | foodPref      | Vegan                     |
+      | cuisine       | Indian                    |
+      | dob           | 01/15/1994                |
     Then User is directed to My Patient Page with New Patient Details created
 
   Scenario: Select a single value from Allergy dropdown
@@ -189,6 +215,7 @@ Feature: Add Patient detailed verification
 
   Scenario: Add first name field with special character data
     When User navigate to next field after entering special characters in First name field
+    |Firstname | John@#$|
     Then User should see error message in Patient first name accepts only alphabets
 
   Scenario: Mandatory field check for firstname field
