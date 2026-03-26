@@ -1,23 +1,31 @@
 package pages;
 
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+
+import utilities.CommonMethods;
 import utilities.ExcelUtils;
+
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
 import org.openqa.selenium.support.PageFactory;
-import org.testng.asserts.SoftAssert;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.Assert;
 
 public class AddPatient02Page {
-	WebDriver driver;
-	SoftAssert softAssert = new SoftAssert();
-	public AddPatient02Page(WebDriver driver) {
-		this.driver = driver;
-		PageFactory.initElements(driver, this);
-	}
+    private WebDriver driver;
+    private CommonMethods common;
+    public AddPatient02Page(WebDriver driver) {
+        this.driver = driver;
+        this.common = new CommonMethods(driver); 
+        PageFactory.initElements(driver, this);
+    }
 	@FindBy(xpath = "//input[@id='firstname' or @name='firstName']")
 	private WebElement firstNameField;
 
@@ -100,111 +108,181 @@ public class AddPatient02Page {
 	
 	@FindBy(xpath = "//button[@type='submit']")
 	private WebElement submitButton;
-			
+		
+	// --- Name Field Errors ---
+    @FindBy(xpath = "//*[contains(text(),'Firstname field is required')]")
+    private WebElement firstNameRequiredError;
+
+    @FindBy(xpath = "//*[contains(text(),'Lastname field is required')]")
+    private WebElement lastNameRequiredError;
+
+    @FindBy(xpath = "//*[contains(text(),'Patient first name accepts only alphabets')]")
+    private WebElement firstNameAlphabetsError;
+
+	// --- Email Error Messages ---
+	@FindBy(xpath = "//*[text()='Please enter a valid email address']")
+	private WebElement emailInvalidError;
+
+	@FindBy(xpath = "//*[text()='Email id already exists']")
+	private WebElement emailExistsError;
+
+	@FindBy(xpath = "//*[text()='Email field is required']")
+	private WebElement emailRequiredError;
+
+	// --- Contact Number Error Messages ---
+	@FindBy(xpath = "//*[text()='Contact number accepts only numeric values']")
+	private WebElement contactNumericError;
+
+	@FindBy(xpath = "//*[text()='Please enter a valid contact number']")
+	private WebElement contactInvalidError;
+
+	@FindBy(xpath = "//*[text()='Contact number already exists']")
+	private WebElement contactExistsError;
+
+	@FindBy(xpath = "//*[text()='Contact Num is required']")
+	private WebElement contactRequiredError;
 
 //Actions
-public void clickOnNewPatientLink() {
-    newPatientLink.click();
-}
-public boolean isOnMyPatientsPage() {
-    try {
-        return addPatientDetailsTitle.isDisplayed();
-    } catch (org.openqa.selenium.NoSuchElementException e) {
-        return false;
+	public void clickOnNewPatientLink() {
+        common.clickWebElement(newPatientLink);
     }
-}
+	public boolean isOnMyPatientsPage() {
+         return common.isElemnetDisplayed(addPatientDetailsTitle);
+    }
 
 
 public void fillFormByTestCase(String testCaseID, String sheetName) {
-    // Fetch the data internally so the Step Def doesn't have to
     List<Map<String, String>> excelData = getExcelData(sheetName); 
     
     for (Map<String, String> row : excelData) {
         if (row.get("TestCaseID").equalsIgnoreCase(testCaseID)) {
-            // 1. Extract values from the row
             String input = row.get("InputData") == null ? "" : row.get("InputData");
             String field = row.get("ExpectedField").toLowerCase().trim();
 
-            // 2. Perform the UI action based on the "ExpectedField" column
             switch (field) {
                 case "firstname":
-                    firstNameField.clear();
-                    firstNameField.sendKeys(input);
-                    lastNameField.click(); // Trigger validation error
+                    common.sendKeys(firstNameField, input);
+                    common.clickWebElement(lastNameField); // Blur to trigger error
                     break;
 
                 case "lastname":
-                    lastNameField.clear();
-                    lastNameField.sendKeys(input);
-                    firstNameField.click();
+                    common.sendKeys(lastNameField, input);
+                    common.clickWebElement(firstNameField);
                     break;
 
                 case "email":
-                    emailField.clear();
-                    emailField.sendKeys(input);
-                    lastNameField.click();
+                    common.sendKeys(emailField, input);
+                    common.clickWebElement(lastNameField);
                     break;
 
                 case "contact number":
-                    contactNumberField.clear();
-                    contactNumberField.sendKeys(input);
-                    lastNameField.click();
+                case "contact":
+                    common.sendKeys(contactNumberField, input);
+                    common.clickWebElement(lastNameField);
                     break;
 
                 case "weight":
-                    weightField.clear();
-                    weightField.sendKeys(input);
-                    heightField.click();
+                    common.sendKeys(weightField, input);
+                    common.clickWebElement(heightField);
                     break;
 
                 case "height":
-                    heightField.clear();
-                    heightField.sendKeys(input);
-                    weightField.click();
+                    common.sendKeys(heightField, input);
+                    common.clickWebElement(weightField);
                     break;
 
                 case "temp":
-                    temperatureField.clear();
-                    temperatureField.sendKeys(input);
-                    weightField.click();
+                    common.sendKeys(temperatureField, input);
+                    common.clickWebElement(weightField);
                     break;
 
                 case "spdp":
-                    // Handles inputs like "120/80" from Excel
                     if(input.contains("/")) {
                         String[] vals = input.split("/");
-                        spField.sendKeys(vals[0]);
-                        dpField.sendKeys(vals[1]);
+                        common.sendKeys(spField, vals[0]);
+                        common.sendKeys(dpField, vals[1]);
                     } else {
-                        spField.sendKeys(input);
+                        common.sendKeys(spField, input);
                     }
-                    weightField.click();
+                    common.clickWebElement(weightField);
                     break;
 
                 default:
                     System.out.println("Warning: No matching field logic for " + field);
             }
-            return; // Successfully processed, exit the loop
+            return; 
         }
     }
-    // Throw error if the ID from the Feature file doesn't exist in Excel
     throw new RuntimeException("TestCaseID '" + testCaseID + "' not found in sheet: " + sheetName);
 }
 private List<Map<String, String>> getExcelData(String sheetName) {
-	// Get the path from your global config file
     String path = utilities.ConfigReader.getProperty("test_data_path");
-    
     try {
-        // Instantiate your team's existing Excel utility
         utilities.ExcelUtils excel = new utilities.ExcelUtils(path);
-        
-        // Return all rows from the requested sheet (PatientData, Vitals, etc.)
         return ExcelUtils.getDataAll(sheetName);
         
     } catch (Exception e) {
         System.err.println("CRITICAL: Could not read sheet '" + sheetName + "' from " + path);
-        return new ArrayList<>(); // Return empty list to prevent downstream crashes
+        return new ArrayList<>();
     }
 
+}
+public void validateErrorByTestCase(String testCaseID, String sheetName) {
+    List<Map<String, String>> data = getExcelData(sheetName);
+    String expectedError = "";
+    for (Map<String, String> row : data) {
+        if (row.get("TestCaseID").equalsIgnoreCase(testCaseID)) {
+            expectedError = row.get("ExpectedErrorMessage");
+            break;
+        }
+    }
+    if (expectedError == null || expectedError.trim().isEmpty()) {
+        return;
+    }
+
+    try {
+      
+        By errorLocator = By.xpath("//*[contains(text(),\"" + expectedError.trim() + "\")]");
+        
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
+        WebElement errorMsg = wait.until(ExpectedConditions.visibilityOfElementLocated(errorLocator));
+         String actualError = errorMsg.getText().trim();
+        Assert.assertEquals(actualError, expectedError.trim(), 
+            "Error mismatch for TestCase: " + testCaseID);
+            
+    } catch (Exception e) {
+        Assert.fail("Test Case [" + testCaseID + "]: Expected error message [" + expectedError + "] was not found on the UI.");
+    }
+    }
+    public void uploadHealthReport(String fileName) {
+        String filePath = System.getProperty("user.dir") + "/src/test/resources/testData/" + fileName;
+        fileInput.sendKeys(filePath);
+    }
+
+    public void clickSubmit() {
+        common.clickWebElement(submitButton);
+    }
+
+    public void clickClose() {
+        common.clickWebElement(submitButton);
+    }
+
+    public String getHealthConditionText() {
+        return common.getText(healthConditions);
+    }
+
+    public boolean isPdfDisplayed() {
+        return common.isElemnetDisplayed(uploadedFileName);
+    
+}public void clickButtonByText(String text) {
+    driver.findElement(By.xpath("//button[contains(text(),'" + text + "')]")).click();
+}
+
+public boolean isDialogTitleVisible() {
+    try {
+        return addPatientDetailsTitle.isDisplayed();
+    } catch (Exception e) {
+        return false;
+    }
 }}
 

@@ -1,17 +1,18 @@
+@AddPatient02
 Feature: Add Patient Details Validation
 
-Background: Navigation to Add Patient Dialog box
+  Background: Navigation to Add Patient Dialog box
     Given User is logged into the Dietitian application
     When User clicks on "New Patient" Link
     Then User is on Add Patient Details Dialog Box
 
-@UI_Validation
-Scenario Outline: Verify Patient Details UI validation for various fields
+  @UI_Validation
+  Scenario Outline: Verify Patient Details UI validation for various fields
     When User enters for "<TestCaseID>" from Excel sheet "PatientData" and navigates to next field
     Then User should see the expected error for "<TestCaseID>"
 
- Examples:
-      | TestCaseID 
+    Examples:
+      | TestCaseID                          |
       | First Name  Numeric Data            |
       | First Name Special Characters       |
       | First Name Mandatory                |
@@ -33,7 +34,7 @@ Scenario Outline: Verify Patient Details UI validation for various fields
       | Food Preference Field Empty         |
       | Cuisine Category Field Empty        |
       | Date of Birth Empty                 |
-      | Weight with Valid Data				|
+      | Weight with Valid Data              |
       | Weight With Special Characters      |
       | Weight With Alphabets               |
       | Height With Valid Data              |
@@ -49,31 +50,20 @@ Scenario Outline: Verify Patient Details UI validation for various fields
       | Invalid File Type Upload            |
       | File Exceeding Size Limit           |
 
-      
   @UploadWithoutFile
-Scenario: Validate submission without selecting a file
-When User enters valid patient data but does not select a file
-When User clicks Submit button
-Then User should be redirected to My Patient page
-Then User should see the New Patient record added successfully
+  Scenario: Validate submission without selecting a file
+    Given User has entered all valid patient details except for a file upload
+    When User clicks the Submit button without selecting a file
+    Then User should see the new patient record added successfully on the My Patient page
 
-@TestReportVerification
-Scenario: Verify the presence of record details in test report
-When User uploads health report in "pdf" format
-When User clicks Submit button
-Then User is directed to the Test Report section
-When User clicks "View Previous Test Report"
-Then User should see new record number in test report page
-Then User should see PDF file in test report
-Then User should see upload date info in test report
-Then User should see health condition as the values in health report
+  @TestReportVerification
+  Scenario: Verify the presence of record details in test report
+    Given User has successfully submitted a patient form with a "pdf" health report
+    When User clicks "View Previous Test Report" in the Test Report section
+    Then User should see the record number, PDF file, upload date, and health conditions in the  view report page
 
-@Navigation
-Scenario: Close Patient dialog box using the Close button
-
-When User clicks Close button after submit
-Then Add  Patient dialog box should close
-Then User should be on my patients page
-
-
-
+  @Navigation
+  Scenario: Close Patient dialog box using the Close button
+    Given User has completed a patient data submission
+    When User clicks the Close button on the confirmation dialog
+    Then Add Patient dialog should close and redirect the user to the My Patient page
