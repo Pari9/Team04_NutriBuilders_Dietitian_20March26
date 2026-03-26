@@ -12,6 +12,7 @@ public class PageObjectManager {
 	private DashboardPage dashboardPage;
 	private DeletePopupInfo deletePopupInfo;
 	private CommonMethods commonMethods;
+	private AddPatient02Page addPatientPage;
 
 	public PageObjectManager(WebDriver driver) {
 
@@ -54,4 +55,10 @@ public class PageObjectManager {
 		}
 		return commonMethods;
 	}
+	public AddPatient02Page getAddPatientPage() {
+        if (addPatientPage == null) {
+            addPatientPage = new AddPatient02Page(driver);
+        }
+        return addPatientPage;
+    }
 }
