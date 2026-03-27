@@ -10,6 +10,9 @@ public class PageObjectManager {
 	private WebDriver driver;
 	private LoginPage loginPage;
 	private DashboardPage dashboardPage;
+
+	private AddPatient03Page addPatientPage;
+
 	private DeletePopupInfo deletePopupInfo;
 	private CommonMethods commonMethods;
 	private AddPatient02Page addPatientPage;
@@ -49,7 +52,16 @@ public class PageObjectManager {
 		}
 		return deletePopupInfo;
 	}
+
+	public AddPatient03Page getAddPatientPage() {
 	
+			if (addPatientPage == null) {
+				addPatientPage = new AddPatient03Page(driver);
+			}
+			return addPatientPage;
+		}
+	
+
 	public CommonMethods getCommonMethods()
 	{
 		if(commonMethods == null)

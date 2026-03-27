@@ -32,11 +32,60 @@ public class CommonMethods {
         return element;
     }
 
+	public String getText(By locator) {
+        return waitForVisibility(locator).getText().trim();
+    }
+
+    public void scrollWaitAndClick(WebElement element) {
+        ((JavascriptExecutor) driver).executeScript(
+                "arguments[0].scrollIntoView({block:'center'});", element);
+        wait.until(ExpectedConditions.visibilityOf(element));
+        wait.until(ExpectedConditions.elementToBeClickable(element)).click();
+    }
+
+    public void clickElementByText(String text) {
+        By optionLocator = By.xpath("//mat-option//span[contains(text(),\"" + text + "\")]");
+        try {
+            WebElement option = wait.until(ExpectedConditions.elementToBeClickable(optionLocator));
+            option.click();
+        } catch (Exception e) {
+            System.err.println("CRITICAL: Could not find or click the option: " + text);
+            throw e;
+        }
+    }
+
+    // This is the method from the Integration branch, corrected to handle a List
+    public List<WebElement> waitForVisibilityOfAllElements(List<WebElement> elements) {
+        return wait.until(ExpectedConditions.visibilityOfAllElements(elements));
+    }
+
+	public boolean isElementPresentByText(List<WebElement> elements,
+			String text) {
+
+		if (elements == null || elements.isEmpty()) {
+			return false;
+		}
+		for (WebElement element : elements) {
+			if (element.getText() != null && element.getText().trim().equalsIgnoreCase(text.trim())) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	public boolean isElementTextEquals(WebElement element,
+			String expectedText) {
+
+		if (element == null || expectedText == null) {
+			return false;
+		}
+		String actualText = element.getText().trim();
+		return actualText.equalsIgnoreCase(expectedText.trim());
 	public WebElement waitForVisibilityOfElements(WebElement element) {
 		wait.until(ExpectedConditions.visibilityOfAllElements(element));
 		return element;
 	}
-
+  }
 	public String getText(WebElement element) {
 
 		if (element != null) {
