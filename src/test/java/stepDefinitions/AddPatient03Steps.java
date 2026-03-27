@@ -30,8 +30,7 @@ public class AddPatient03Steps {
 	public void user_is_logged_into_the_dietitian_application() {
 		String currentUrl = DriverManager.getDriver().getCurrentUrl();
 		Assert.assertTrue(currentUrl.contains("dietician"), "Not on the dietician UI");
-
-	}
+}
 
 	@When("User clicks on {string} Link")
 	public void user_clicks_on_link(String string) {
