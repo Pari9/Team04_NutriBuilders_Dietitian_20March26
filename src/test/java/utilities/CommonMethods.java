@@ -12,20 +12,15 @@ public class CommonMethods {
 
 	private WebDriver driver;
 	private WebDriverWait wait;
-	private JavascriptExecutor js;
 
 	public CommonMethods(WebDriver driver) {
 		this.driver = driver;
 		this.wait = new WebDriverWait(driver, Duration.ofSeconds(5));
-		js = (JavascriptExecutor) driver;
 	}
 
-	public void clickWebElement(WebElement element) {
+	public WebElement clickWebElement(WebElement element) {
 		wait.until(ExpectedConditions.elementToBeClickable(element)).click();
-	}
-
-	public void clickElementByLocator(By locator) {
-		wait.until(ExpectedConditions.elementToBeClickable(locator)).click();
+		return element;
 	}
 
 	public WebElement waitForVisibility(By locator) {
@@ -37,55 +32,9 @@ public class CommonMethods {
         return element;
     }
 
-	public String getText(By locator) {
-		return waitForVisibility(locator).getText().trim();
-	}
-
-	public void scrollWaitAndClick(WebElement element) {
-
-		((JavascriptExecutor) driver).executeScript(
-				"arguments[0].scrollIntoView({block:'center'});", element);
-
-		wait.until(ExpectedConditions.visibilityOf(element));
-		wait.until(ExpectedConditions.elementToBeClickable(element)).click();
-	}
-
-	public int getElementCount(List<WebElement> element) {
-		return element.size();
-	}
-
-	public void clickElementByText(List<WebElement> elements, String text) {
-		for (WebElement element : elements) {
-			if (element.getText().trim().equalsIgnoreCase(text.trim())) {
-				clickWebElement(element);
-				return;
-			}
-		}
-		throw new RuntimeException("Element with text not found: " + text);
-	}
-
-	public boolean isElementPresentByText(List<WebElement> elements,
-			String text) {
-
-		if (elements == null || elements.isEmpty()) {
-			return false;
-		}
-		for (WebElement element : elements) {
-			if (element.getText() != null && element.getText().trim().equalsIgnoreCase(text.trim())) {
-				return true;
-			}
-		}
-		return false;
-	}
-
-	public boolean isElementTextEquals(WebElement element,
-			String expectedText) {
-
-		if (element == null || expectedText == null) {
-			return false;
-		}
-		String actualText = element.getText().trim();
-		return actualText.equalsIgnoreCase(expectedText.trim());
+	public WebElement waitForVisibilityOfElements(WebElement element) {
+		wait.until(ExpectedConditions.visibilityOfAllElements(element));
+		return element;
 	}
 
 	public String getText(WebElement element) {
@@ -95,44 +44,6 @@ public class CommonMethods {
 		}
 		return null;
 
-	}
-
-	public String getAttribute(WebElement element, String attributeName) {
-
-		if (element != null) {
-			return element.getAttribute(attributeName).trim();
-		}
-		return null;
-
-	}
-
-	public boolean isElementEnabled(WebElement element) {
-		if (element == null) {
-			throw new IllegalArgumentException("WebElement is null");
-		}
-		return element.isEnabled();
-	}
-
-	public void waitForUrlToContain(String partialUrl) {
-		wait.until(ExpectedConditions.urlContains(partialUrl));
-	}
-
-	public void sendKeys(WebElement element, String text) {
-		wait.until(ExpectedConditions.visibilityOf(element));
-		element.clear();
-		element.sendKeys(text);
-	}
-
-	public String JavaScriptvalidation(WebElement element) {
-
-		return ((String) js.executeScript(
-				"return arguments[0].validationMessage;", element));
-
-	}
-
-	public boolean isElemnetDisplayed(WebElement element) {
-		wait.until(ExpectedConditions.visibilityOf(element));
-		return element.isDisplayed();
 	}
 
 	public String getAlert() {
@@ -150,9 +61,4 @@ public class CommonMethods {
 
 	}
 
-	public void mouseOverAnElement(WebElement element) {
-		Actions actions = new Actions(driver);
-		actions.moveToElement(element).perform();
-
-	}
 }
