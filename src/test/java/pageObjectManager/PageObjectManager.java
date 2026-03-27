@@ -10,6 +10,8 @@ public class PageObjectManager {
 	private WebDriver driver;
 	private LoginPage loginPage;
 	private DashboardPage dashboardPage;
+	private MyPatientsPage mypatientspage;
+	
 
 
 	private AddPatientPage addPatientPage;
@@ -42,6 +44,12 @@ public class PageObjectManager {
 		}
 		return dashboardPage;
 	}
+	public MyPatientsPage getMyPatientsPage() {
+        if (mypatientspage == null) {
+        	mypatientspage = new MyPatientsPage(driver);
+        }
+        return mypatientspage;
+    }
 	
 	// public DeletePopupInfo getDeletePopupInfo()
 	// {
