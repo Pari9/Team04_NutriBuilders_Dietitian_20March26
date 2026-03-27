@@ -15,7 +15,10 @@ public class PageObjectManager {
 
 	private DeletePopupInfo deletePopupInfo;
 	private CommonMethods commonMethods;
-
+	private AddPatient02Page addPatientPage;
+	private CommonMethods commonMethods;
+	private ViewReportsPage reportspage;
+	private EditPatientFieldsPage editPatientsPage;
 
 	public PageObjectManager(WebDriver driver) {
 
@@ -66,5 +69,32 @@ public class PageObjectManager {
 			commonMethods = new CommonMethods(driver);
 		}
 		return commonMethods;
+	}
+	public AddPatient02Page getAddPatientPage() {
+        if (addPatientPage == null) {
+            addPatientPage = new AddPatient02Page(driver);
+        }
+        return addPatientPage;
+    }
+	public CommonMethods getCommonMethods()
+	{
+		if(commonMethods == null)
+		{
+			commonMethods = new CommonMethods(driver);
+		}
+		return commonMethods;
+	}
+	public ViewReportsPage getReportsPage(){
+		if(reportspage == null){
+			return new ViewReportsPage(driver);
+		}
+		return reportspage;
+	}
+
+	public EditPatientFieldsPage getPatientspage(){
+		if(editPatientsPage == null){
+			return new EditPatientFieldsPage(driver);
+		}
+		return editPatientsPage;
 	}
 }
