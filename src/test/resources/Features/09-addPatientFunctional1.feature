@@ -1,4 +1,4 @@
-@LoginRequired
+@DietitianLogin
 Feature: Add Patient detailed verification
 
   Background: User is in Add Patient Details and creating New Patient Details

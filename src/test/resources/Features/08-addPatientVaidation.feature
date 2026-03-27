@@ -1,4 +1,4 @@
-@LoginRequired
+@DietitianLogin
 Feature: Add Patient dialog validations
 
   Background: User logged into application and opens New Patient dialog
