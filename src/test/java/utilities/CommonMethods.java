@@ -53,8 +53,16 @@ public class CommonMethods {
             throw e;
         }
     }
+    public boolean isElementDisplayed(WebElement element) {
+        try {
+            
+            return element.isDisplayed(); 
+        } catch (NoSuchElementException | StaleElementReferenceException | NullPointerException e) {
+         
+            return false; 
+        }
+    }
 
-    // This is the method from the Integration branch, corrected to handle a List
     public List<WebElement> waitForVisibilityOfAllElements(List<WebElement> elements) {
         return wait.until(ExpectedConditions.visibilityOfAllElements(elements));
     }
@@ -81,10 +89,11 @@ public class CommonMethods {
 		}
 		String actualText = element.getText().trim();
 		return actualText.equalsIgnoreCase(expectedText.trim());
+	}
 	public WebElement waitForVisibilityOfElements(WebElement element) {
 		wait.until(ExpectedConditions.visibilityOfAllElements(element));
 		return element;
-	}
+
   }
 	public String getText(WebElement element) {
 
@@ -109,5 +118,18 @@ public class CommonMethods {
 		}
 
 	}
+
+	public void sendKeys(WebElement element, String text) {
+	    try {
+	        
+	        if (element.isDisplayed() && element.isEnabled()) {
+	            element.clear(); 
+	            element.sendKeys(text);
+	        }
+	    } catch (Exception e) {
+	        System.out.println("Error sending keys to element: " + e.getMessage());
+	    }
+	}
+
 
 }

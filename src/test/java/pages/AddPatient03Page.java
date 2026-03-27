@@ -141,7 +141,7 @@ public class AddPatient03Page {
 	}
 
 	public boolean isOnMyPatientsPage() {
-		return common.isElemnetDisplayed(addPatientDetailsTitle);
+		return common.isElementDisplayed(addPatientDetailsTitle);
 	}
 
 	public void fillFormByTestCase(String testCaseID, String sheetName) {
@@ -286,7 +286,7 @@ public class AddPatient03Page {
 	}
 
 	public boolean isPdfDisplayed() {
-		return common.isElemnetDisplayed(uploadedFileName);
+		return common.isElementDisplayed(uploadedFileName);
 
 	}
 
