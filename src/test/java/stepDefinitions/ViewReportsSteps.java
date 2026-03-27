@@ -227,11 +227,11 @@ public class ViewReportsSteps {
         pom.getReportsPage().navigateToPosition(navigateTo);
     }
 
-    @Then("{string} should be {string}")
-    public void should_be(String arrow, String state) {
-        boolean result = pom.getReportsPage().isArrowInExpectedState(arrow, state);
-        logger.info("verifying the state of " + arrow + " arrow is " + state);
-        Assert.assertTrue(result, "Arrow " + arrow + " should be " + state + " but it is NOT!");
+    @Then("{string} should be {string} state")
+    public void should_be_state(String string, String string2) {
+        boolean result = pom.getReportsPage().isArrowInExpectedState(string, string2);
+        logger.info("verifying the state of " + string + " arrow is " + string2);
+        Assert.assertTrue(result, "Arrow " + string + " should be " + string2 + " but it is NOT!");
     }
 
     @When("User clicks on View Patient Test Reports button")
@@ -263,8 +263,8 @@ public class ViewReportsSteps {
         pom.getReportsPage().isDashboardPageDisplayed();
     }
 
-    @When("User clicks on My Patients button")
-    public void user_clicks_on_my_patients_button() {
+    @When("User clicks on my Patients button")
+    public void user_clicks_on_my_Patients_button() {
         logger.info("User is clicking My Patients button");
         pom.getReportsPage().clickMyPatientsButton();
     }

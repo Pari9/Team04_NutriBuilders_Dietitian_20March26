@@ -96,7 +96,7 @@ Feature: View Test Report
     Scenario Outline: Pagination arrow states based on page navigation
       Given User is in View Patient Test Reports page with multiple pages of record
       When User navigates to "<navigateTo>"
-      Then "<arrow>" should be "<state>"
+      Then "<arrow>" should be "<state>" state
       Examples:
         |      navigateTo               | arrow | state    |
         | first page of patient record  | <     | disabled |
@@ -139,6 +139,6 @@ Feature: View Test Report
 
     Scenario: Each page should display only 2  records
       Given User is in dietician application dashboard page
-      When User clicks on My Patients button
+      When User clicks on my Patients button
       Then User should see only 2 records in each page
 

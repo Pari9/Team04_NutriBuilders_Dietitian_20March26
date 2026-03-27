@@ -1,4 +1,4 @@
-@AddPatient02
+@DietitianLogin
 Feature: Add Patient Details Validation
 
   Background: Navigation to Add Patient Dialog box

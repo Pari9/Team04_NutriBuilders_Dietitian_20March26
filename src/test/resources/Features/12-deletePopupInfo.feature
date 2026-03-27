@@ -1,3 +1,4 @@
+@DietitianLogin
 Feature: Delete Patient Popup Info Validation
 
   Background:

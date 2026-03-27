@@ -16,7 +16,7 @@ public class PageObjectManager {
 
 	private AddPatientPage addPatientPage;
 
-	// private DeletePopupInfo deletePopupInfo;
+	private DeletePopupInfo deletePopupInfo;
 	private CommonMethods commonMethods;
 	private ViewReportsPage reportspage;
 	private EditPatientFieldsPage editPatientsPage;
@@ -51,14 +51,14 @@ public class PageObjectManager {
         return mypatientspage;
     }
 	
-	// public DeletePopupInfo getDeletePopupInfo()
-	// {
-	// 	if(deletePopupInfo == null)
-	// 	{
-	// 		deletePopupInfo = new DeletePopupInfo(driver);
-	// 	}
-	// 	return deletePopupInfo;
-	// }
+	 public DeletePopupInfo getDeletePopupInfo()
+	 {
+	 	if(deletePopupInfo == null)
+	 	{
+	 		deletePopupInfo = new DeletePopupInfo(driver);
+	 	}
+	 	return deletePopupInfo;
+	 }
 
 	public CommonMethods getCommonMethods()
 	{

@@ -38,8 +38,9 @@ public class MyPatientsPageSteps {
         pom.getDashboardPage().clickOnLink("My Patients");
     }
     // ------------------- Column Headers -------------------
-    @Then("Up and Down arrow icons should be displayed in the Patient Id column header")
-    public void up_and_down_arrow_icons_should_be_displayed_in_the_patient_id_column_header() {
+   
+    @Then("Up and Down arrow icons should be displayed in the Patient Id of My Patients Page column header")
+    public void up_and_down_arrow_icons_should_be_displayed_in_the_patient_id_of_My_Patients_Page_column_header() {
         LoggerFactory.info("Validating Patient Id column sorting icons are displayed");
         Assert.assertTrue(
                 myPatientsPage.isPatientIdSortIconDisplayed(),
