@@ -1,3 +1,4 @@
+@Dashboard
 Feature: DietitianApplication Dashboard
 
 Background: user is on the browser 
