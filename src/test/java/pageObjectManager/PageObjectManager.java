@@ -3,6 +3,7 @@ package pageObjectManager;
 import org.openqa.selenium.WebDriver;
 
 import pages.*;
+import utilities.CommonMethods;
 
 public class PageObjectManager {
 
@@ -11,6 +12,14 @@ public class PageObjectManager {
 	private DashboardPage dashboardPage;
 	private MyPatientsPage mypatientspage;
 	
+
+
+	private AddPatientPage addPatientPage;
+
+	// private DeletePopupInfo deletePopupInfo;
+	private CommonMethods commonMethods;
+	private ViewReportsPage reportspage;
+	private EditPatientFieldsPage editPatientsPage;
 
 	public PageObjectManager(WebDriver driver) {
 
@@ -42,5 +51,42 @@ public class PageObjectManager {
         return mypatientspage;
     }
 	
+	// public DeletePopupInfo getDeletePopupInfo()
+	// {
+	// 	if(deletePopupInfo == null)
+	// 	{
+	// 		deletePopupInfo = new DeletePopupInfo(driver);
+	// 	}
+	// 	return deletePopupInfo;
+	// }
+
+	public CommonMethods getCommonMethods()
+	{
+		if(commonMethods == null)
+		{
+			commonMethods = new CommonMethods(driver);
+		}
+		return commonMethods;
+	}
+	public ViewReportsPage getReportsPage(){
+		if(reportspage == null){
+			return new ViewReportsPage(driver);
+		}
+		return reportspage;
+	}
+
+	public EditPatientFieldsPage getPatientspage(){
+		if(editPatientsPage == null){
+			return new EditPatientFieldsPage(driver);
+		}
+		return editPatientsPage;
+	}
+
+		public AddPatientPage getAddpatientPage() {
 	
+			if (addPatientPage == null) {
+				addPatientPage = new AddPatientPage(driver);
+			}
+			return addPatientPage;
+		}
 }

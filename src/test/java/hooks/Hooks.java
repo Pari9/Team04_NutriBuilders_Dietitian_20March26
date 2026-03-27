@@ -3,6 +3,7 @@ package hooks;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.util.Map;
 
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
@@ -14,8 +15,10 @@ import io.cucumber.java.Before;
 import io.cucumber.java.Scenario;
 import io.qameta.allure.Allure;
 import pageObjectManager.PageObjectManager;
+import utilities.ConfigReader;
 import utilities.LoggerFactory;
 public class Hooks {
+
 
 	public static PageObjectManager pom;
 	@Before(order =1)
@@ -24,12 +27,14 @@ public class Hooks {
 		DriverManager.initBrowser();
 		pom = new PageObjectManager(DriverManager.getDriver());
 	}
-	@Before(value = "@LoginRequired", order = 2)
+	@Before(value = "@DietitianLogin", order = 2)
 	public void login() {
+
 		LoggerFactory.info("Performing login ");
-		/*pom.getHomePage().homeGetStartedBtn();
-		pom.getLoginPage().clickSignIn();
-		pom.getLoginPage().loginToPortal();*/
+		pom.getLoginPage().validlogin(
+				ConfigReader.getProperty("username"),
+				ConfigReader.getProperty("password")
+		);
 		LoggerFactory.info("Login successful");
 	}
 	@After
@@ -40,7 +45,7 @@ public class Hooks {
 		LoggerFactory.info("DONE tearDown()..");
 	}
 
-	@AfterStep
+	//@AfterStep
 	public void takeScreenShot(Scenario scenario) {
 		if (scenario.isFailed()) {
 			TakesScreenshot takesScreenshot = (TakesScreenshot) DriverManager
