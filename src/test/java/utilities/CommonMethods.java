@@ -81,11 +81,16 @@ public class CommonMethods {
 		}
 		String actualText = element.getText().trim();
 		return actualText.equalsIgnoreCase(expectedText.trim());
+	}
+
+		
+
+		
 	public WebElement waitForVisibilityOfElements(WebElement element) {
 		wait.until(ExpectedConditions.visibilityOfAllElements(element));
 		return element;
 	}
-  }
+  
 	public String getText(WebElement element) {
 
 		if (element != null) {
@@ -109,5 +114,26 @@ public class CommonMethods {
 		}
 
 	}
+	public boolean isElementDisplayed(WebElement element) {
+        try {
+            
+            return element.isDisplayed(); 
+        } catch (NoSuchElementException | StaleElementReferenceException | NullPointerException e) {
+         
+            return false; 
+        }
+    }
+public void sendKeys(WebElement element, String text) {
+     try {
+         
+         if (element.isDisplayed() && element.isEnabled()) {
+             element.clear(); 
+             element.sendKeys(text);
+         }
+     } catch (Exception e) {
+         System.out.println("Error sending keys to element: " + e.getMessage());
+     }
+ }
+
 
 }
