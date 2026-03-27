@@ -63,6 +63,19 @@ public class CommonMethods {
 		}
 		throw new RuntimeException("Element with text not found: " + text);
 	}
+	public void clickElementByText(String text) {
+	    // Dynamic XPath: Looks for a span containing the specific text inside an option
+	    By optionLocator = By.xpath("//mat-option//span[contains(text(),\"" + text + "\")]");
+	    
+	    try {
+	        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
+	        WebElement option = wait.until(ExpectedConditions.elementToBeClickable(optionLocator));
+	        option.click();
+	    } catch (Exception e) {
+	        System.err.println("CRITICAL: Could not find or click the option: " + text);
+	        throw e;
+	    }
+	}
 
 	public boolean isElementPresentByText(List<WebElement> elements,
 			String text) {

@@ -9,7 +9,7 @@ public class PageObjectManager {
 	private WebDriver driver;
 	private LoginPage loginPage;
 	private DashboardPage dashboardPage;
-	private AddPatient02Page addPatientPage;
+	private AddPatient03Page addPatientPage;
 
 	public PageObjectManager(WebDriver driver) {
 
@@ -36,9 +36,9 @@ public class PageObjectManager {
 	}
 	
 	
-	public AddPatient02Page getAddPatientPage() {
+	public AddPatient03Page getAddPatientPage() {
         if (addPatientPage == null) {
-            addPatientPage = new AddPatient02Page(driver);
+            addPatientPage = new AddPatient03Page(driver);
         }
         return addPatientPage;
     }
