@@ -1,4 +1,4 @@
-@AddPatient02
+@DietitianLogin
 Feature: Add Patient Details Validation
 
   Background: Navigation to Add Patient Dialog box
@@ -53,7 +53,7 @@ Feature: Add Patient Details Validation
   @UploadWithoutFile
   Scenario: Validate submission without selecting a file
     Given User has entered all valid patient details except for a file upload
-       When User clicks the Submit button without selecting a file
+    When User clicks the Submit button without selecting a file
     Then User should see the new patient record added successfully on the My Patient page
 
   @TestReportVerification
