@@ -1,4 +1,4 @@
-@mypatientspage
+@DietitianLogin
 Feature: UI Validation of My Patients Page 
   
 Background: User is logged into the application

@@ -1,4 +1,4 @@
-@PaginationManagement
+@DietitianLogin
 Feature: Pagination Management on My Patients Page
   Validate pagination behavior for multiple, single, maximum, and no patient records
 

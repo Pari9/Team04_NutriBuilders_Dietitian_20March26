@@ -1,4 +1,4 @@
-@patientstablemanagement
+@DietitianLogin
 Feature: Validate sorting and search functionality for patient table
 
 Background: User is in dietician dashboard page with patient records 
