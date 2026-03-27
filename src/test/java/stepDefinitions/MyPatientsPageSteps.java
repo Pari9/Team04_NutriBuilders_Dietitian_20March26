@@ -7,7 +7,6 @@ import utilities.LoggerFactory;
 import io.cucumber.datatable.DataTable;
 import org.testng.Assert;
 import drivers.DriverManager;
-
 import java.util.List;
 import java.util.Map;
 
@@ -15,19 +14,19 @@ public class MyPatientsPageSteps {
 
     private PageObjectManager pom;
     private MyPatientsPage myPatientsPage;
-    private LoggerFactory log;
+    
 
     public MyPatientsPageSteps() {
         this.pom = new PageObjectManager(DriverManager.getDriver());
         this.myPatientsPage = pom.getMyPatientsPage();
-        //this.log = new LoggerFactory(this.getClass()); // Proper Logger instance
+        
     }
 
     // ------------------- Dashboard -------------------
     @Given("User is on the dashboard page")
     public void user_is_on_the_dashboard_page() {
         LoggerFactory.info("Navigating to dashboard page");
-        pom.getLoginPage().DietitianPageUrl();
+        pom.getDashboardPage().isDashboard();
     }
 
     // ------------------- Column Headers -------------------
