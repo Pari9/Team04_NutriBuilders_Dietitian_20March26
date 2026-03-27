@@ -1,4 +1,4 @@
-@patientstable
+@DietitianLogin
 Feature: Validate Patient Table on My Patients Page
   Validate patient table behavior for users with and without patient records
 

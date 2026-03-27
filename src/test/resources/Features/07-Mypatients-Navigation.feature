@@ -1,4 +1,4 @@
-@navigatepatienttestreports
+@DietitianLogin
 Feature: Navigation to View Patient Test Reports
 
   Background: User is logged into the dietician application
