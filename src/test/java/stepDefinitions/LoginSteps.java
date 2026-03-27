@@ -26,7 +26,7 @@ public class LoginSteps {
 public void user_enters_application_url() {
 	
 	pom.getLoginPage().DietitianPageUrl();
-	pom.getLoginPage().clickSignIn();
+	pom.getLoginPage().clicklogIn();
 }
 
 @Then("{string} should have {string} as {string}")

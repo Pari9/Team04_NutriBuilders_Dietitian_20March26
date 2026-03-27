@@ -12,20 +12,15 @@ public class CommonMethods {
 
 	private WebDriver driver;
 	private WebDriverWait wait;
-	private JavascriptExecutor js;
 
 	public CommonMethods(WebDriver driver) {
 		this.driver = driver;
 		this.wait = new WebDriverWait(driver, Duration.ofSeconds(5));
-		js = (JavascriptExecutor) driver;
 	}
 
-	public void clickWebElement(WebElement element) {
+	public WebElement clickWebElement(WebElement element) {
 		wait.until(ExpectedConditions.elementToBeClickable(element)).click();
-	}
-
-	public void clickElementByLocator(By locator) {
-		wait.until(ExpectedConditions.elementToBeClickable(locator)).click();
+		return element;
 	}
 
 	public WebElement waitForVisibility(By locator) {
@@ -38,31 +33,31 @@ public class CommonMethods {
     }
 
 	public String getText(By locator) {
-		return waitForVisibility(locator).getText().trim();
-	}
+        return waitForVisibility(locator).getText().trim();
+    }
 
-	public void scrollWaitAndClick(WebElement element) {
+    public void scrollWaitAndClick(WebElement element) {
+        ((JavascriptExecutor) driver).executeScript(
+                "arguments[0].scrollIntoView({block:'center'});", element);
+        wait.until(ExpectedConditions.visibilityOf(element));
+        wait.until(ExpectedConditions.elementToBeClickable(element)).click();
+    }
 
-		((JavascriptExecutor) driver).executeScript(
-				"arguments[0].scrollIntoView({block:'center'});", element);
+    public void clickElementByText(String text) {
+        By optionLocator = By.xpath("//mat-option//span[contains(text(),\"" + text + "\")]");
+        try {
+            WebElement option = wait.until(ExpectedConditions.elementToBeClickable(optionLocator));
+            option.click();
+        } catch (Exception e) {
+            System.err.println("CRITICAL: Could not find or click the option: " + text);
+            throw e;
+        }
+    }
 
-		wait.until(ExpectedConditions.visibilityOf(element));
-		wait.until(ExpectedConditions.elementToBeClickable(element)).click();
-	}
-
-	public int getElementCount(List<WebElement> element) {
-		return element.size();
-	}
-
-	public void clickElementByText(List<WebElement> elements, String text) {
-		for (WebElement element : elements) {
-			if (element.getText().trim().equalsIgnoreCase(text.trim())) {
-				clickWebElement(element);
-				return;
-			}
-		}
-		throw new RuntimeException("Element with text not found: " + text);
-	}
+    // This is the method from the Integration branch, corrected to handle a List
+    public List<WebElement> waitForVisibilityOfAllElements(List<WebElement> elements) {
+        return wait.until(ExpectedConditions.visibilityOfAllElements(elements));
+    }
 
 	public boolean isElementPresentByText(List<WebElement> elements,
 			String text) {
@@ -86,8 +81,11 @@ public class CommonMethods {
 		}
 		String actualText = element.getText().trim();
 		return actualText.equalsIgnoreCase(expectedText.trim());
+	public WebElement waitForVisibilityOfElements(WebElement element) {
+		wait.until(ExpectedConditions.visibilityOfAllElements(element));
+		return element;
 	}
-
+  }
 	public String getText(WebElement element) {
 
 		if (element != null) {
@@ -95,44 +93,6 @@ public class CommonMethods {
 		}
 		return null;
 
-	}
-
-	public String getAttribute(WebElement element, String attributeName) {
-
-		if (element != null) {
-			return element.getAttribute(attributeName).trim();
-		}
-		return null;
-
-	}
-
-	public boolean isElementEnabled(WebElement element) {
-		if (element == null) {
-			throw new IllegalArgumentException("WebElement is null");
-		}
-		return element.isEnabled();
-	}
-
-	public void waitForUrlToContain(String partialUrl) {
-		wait.until(ExpectedConditions.urlContains(partialUrl));
-	}
-
-	public void sendKeys(WebElement element, String text) {
-		wait.until(ExpectedConditions.visibilityOf(element));
-		element.clear();
-		element.sendKeys(text);
-	}
-
-	public String JavaScriptvalidation(WebElement element) {
-
-		return ((String) js.executeScript(
-				"return arguments[0].validationMessage;", element));
-
-	}
-
-	public boolean isElemnetDisplayed(WebElement element) {
-		wait.until(ExpectedConditions.visibilityOf(element));
-		return element.isDisplayed();
 	}
 
 	public String getAlert() {
@@ -150,9 +110,4 @@ public class CommonMethods {
 
 	}
 
-	public void mouseOverAnElement(WebElement element) {
-		Actions actions = new Actions(driver);
-		actions.moveToElement(element).perform();
-
-	}
 }
